@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App Architecture | Vendorsync</title>
+    <link
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      rel="stylesheet"
+    />
+    <link href="css/frame.css" rel="stylesheet" />
+    <link href="css/controls.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="architecture.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      class="navbar"
+      id="navbar"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 1.2rem">
+        <a
+          href="index.html"
+          class="logo"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+          "
+        >
+          <img
+            src="img/logo.jpeg"
+            alt="Vendorsync Logo"
+            style="
+              height: 40px;
+              width: 40px;
+              object-fit: contain;
+              border-radius: 8px;
+              background: #fff;
+            "
+          />
+          <span
+            style="
+              font-size: 2rem;
+              font-weight: bold;
+              letter-spacing: 2px;
+              color: #fff;
+            "
+            >Vendorsync</span
+          >
+        </a>
+        <button
+          id="menu-toggle"
+          aria-label="Open menu"
+          style="
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            align-items: center;
+            margin-left: 1.2rem;
+          "
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <nav id="nav-links" style="display: flex; align-items: center">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="appstructure.html">App Structure</a>
+        <a href="architecture.html">Architecture</a>
+      </nav>
+    </div>
+    <style>
+      .navbar {
+        background: #1e88e5;
+        padding: 1.5rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 8px #0003;
+      }
+      .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+      .navbar .logo img {
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .navbar #menu-toggle {
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
+        align-items: center;
+        margin-left: 1.2rem;
+      }
+      .navbar nav {
+        display: flex;
+        align-items: center;
+      }
+      .navbar nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+        margin-left: 1.5rem;
+      }
+      .navbar nav a:hover,
+      .navbar nav a.active {
+        color: var(--vendorsync-maroon);
+      }
+      .navbar nav a:last-child {
+        margin-right: 2.5rem;
+      }
+      @media (max-width: 700px) {
+        .navbar nav {
+          display: none !important;
+        }
+        #menu-toggle {
+          display: block !important;
+        }
+        .navbar nav a:last-child {
+          margin-right: 0;
+        }
+      }
+      @media (min-width: 701px) {
+        #menu-toggle {
+          display: none !important;
+        }
+        .navbar nav {
+          display: flex !important;
+        }
+      }
+      /* Themed mobile drawer */
+      #mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 75vw;
+        max-width: 320px;
+        height: 100vh;
+        background: linear-gradient(
+          120deg,
+          var(--vendorsync-blue) 60%,
+          var(--vendorsync-maroon) 100%
+        );
+        box-shadow: -4px 0 24px #0003;
+        z-index: 2000;
+        flex-direction: column;
+        padding: 2.5rem 1.5rem 1.5rem 2rem;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        transition: transform 0.25s cubic-bezier(0.4, 2, 0.6, 1), opacity 0.2s;
+        font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+      }
+      #mobile-menu.open {
+        display: flex !important;
+      }
+      #mobile-menu button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #fff;
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      #mobile-menu button:hover {
+        color: #ffd6d6;
+      }
+      #mobile-menu a {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        text-decoration: none;
+        letter-spacing: 1px;
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        transition: background 0.18s, color 0.18s;
+        box-shadow: 0 1px 8px #0001;
+      }
+      #mobile-menu a:last-child {
+        margin-bottom: 0;
+      }
+      #mobile-menu a:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffe;
+      }
+    </style>
+    <div id="mobile-menu">
+      <button onclick="closeMobileMenu()">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="appstructure.html">App Structure</a>
+      <a href="architecture.html">Architecture</a>
+    </div>
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+      const mobileMenu = document.getElementById("mobile-menu");
+      function openMobileMenu() {
+        mobileMenu.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      menuToggle && menuToggle.addEventListener("click", openMobileMenu);
+      // Close menu on link click (mobile)
+      Array.from(mobileMenu.querySelectorAll("a")).forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+    </script>
+    <main class="arch-main-container">
+      <header class="arch-header">
+        <h1>App Architecture</h1>
+      </header>
+      <section class="arch-section fade-in" style="text-align: center">
+        <h2>System Architecture Diagram</h2>
+        <img
+          src="img/screens/architecture2.png"
+          alt="System Architecture"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0002;
+            margin: 1.5rem auto;
+          "
+        />
+        <p style="color: #333; max-width: 600px; margin: 0 auto">
+          This diagram illustrates the overall system architecture of
+          Vendorsync, showing the main modules and their interactions.
+        </p>
+      </section>
+
+      <section class="arch-section fade-in">
+        <h2>Frontend</h2>
+        <p>
+          The application is built using <strong>Flutter</strong> for a
+          cross-platform experience across mobile, web, and desktop.
+        </p>
+      </section>
+      <section class="arch-section fade-in">
+        <h2>Backend / Database</h2>
+        <p>
+          The backend uses <strong>Firebase Firestore</strong> for real-time
+          data storage and syncing.
+        </p>
+      </section>
+      <section class="arch-section fade-in">
+        <h2>Modules</h2>
+        <ul class="arch-list">
+          <li>POS</li>
+          <li>Inventory Management</li>
+          <li>Supplier Management</li>
+          <li>Reporting</li>
+        </ul>
+      </section>
+      <section class="arch-section fade-in">
+        <h2>Auto-Reorder Logic</h2>
+        <p>
+          When stock levels fall below a
+          <strong>threshold set by the vendor</strong>, the app automatically
+          generates a reorder request to the relevant supplier.
+        </p>
+      </section>
+      <section class="arch-section fade-in">
+        <h2>State Management</h2>
+        <p>
+          The app does not use any external state management libraries. It
+          relies on local widget states and <code>setState</code> logic.
+        </p>
+      </section>
+
+      <button id="backToTop" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+    </main>
+    <footer class="vs-footer">
+      <div class="footer-main">
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="appstructure.html">App Features</a>
+          <a href="architecture.html">Architecture</a>
+
+          <a
+            href="https://github.com/your-github-link"
+            target="_blank"
+            rel="noopener"
+            ><i class="fab fa-github"></i> GitHub</a
+          >
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>123 Main St, Kampala, Uganda</p>
+          <p>
+            Email:
+            <a href="mailto:vendorsyncug@gmail.com">vendorsyncug@gmail.com</a>
+          </p>
+          <p>Phone: +256 123 456 789</p>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+        <div class="footer-section">
+          <h4>Get the App</h4>
+          <div class="footer-app-badges">
+            <a href="#"
+              ><img
+                src="img/google-play-badge.png"
+                alt="Google Play"
+                class="footer-badge"
+            /></a>
+            <a href="#"
+              ><img
+                src="img/app-store-badge.png"
+                alt="App Store"
+                class="footer-badge"
+            /></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Vendorsync. All rights reserved.</span>
+      </div>
+      <style>
+        .vs-footer {
+          background: linear-gradient(90deg, #800000 60%, #4f8cff 100%);
+          color: #fff;
+          padding: 1.1rem 0 0 0;
+          margin-top: 2rem;
+          font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+          font-size: 0.97rem;
+        }
+        .footer-main {
+          max-width: 1100px;
+          margin: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 1.2rem;
+          padding: 0 1rem;
+        }
+        .footer-section {
+          flex: 1 1 140px;
+          min-width: 120px;
+          margin-bottom: 0.7rem;
+        }
+        .footer-section h4 {
+          margin-bottom: 0.4rem;
+          font-size: 1rem;
+          color: #ffe;
+          letter-spacing: 1px;
+        }
+        .footer-section a {
+          display: block;
+          color: #fff;
+          text-decoration: none;
+          margin-bottom: 0.25rem;
+          font-size: 0.97rem;
+          transition: color 0.18s;
+        }
+        .footer-section a:hover {
+          color: #ffd6d6;
+        }
+        .footer-section p {
+          margin: 0 0 0.25rem 0;
+          font-size: 0.97rem;
+        }
+        .footer-social a {
+          display: inline-block;
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+          color: #fff;
+          transition: color 0.18s;
+        }
+        .footer-social a:last-child {
+          margin-right: 0;
+        }
+        .footer-social a:hover {
+          color: #ffd6d6;
+        }
+        .footer-app-badges {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+        }
+        .footer-badge {
+          width: 90px;
+          height: auto;
+          margin: 0;
+          display: inline-block;
+        }
+        .footer-bottom {
+          text-align: center;
+          padding: 0.7rem 0 0.3rem 0;
+          font-size: 0.95rem;
+          color: #ffe;
+          border-top: 1px solid #ffffff33;
+          margin-top: 0.5rem;
+        }
+        @media (max-width: 900px) {
+          .footer-main {
+            flex-wrap: wrap;
+            gap: 0.7rem;
+          }
+          .footer-section {
+            min-width: 100px;
+          }
+        }
+        @media (max-width: 700px) {
+          .footer-main {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0 0.5rem;
+          }
+          .footer-section {
+            width: 100%;
+            min-width: 0;
+            margin-bottom: 0.7rem;
+          }
+          .footer-social a {
+            margin-right: 0.7rem;
+          }
+          .footer-app-badges {
+            gap: 0.4rem;
+          }
+          .footer-badge {
+            width: 90px;
+          }
+          .footer-bottom {
+            font-size: 0.92rem;
+          }
+        }
+      </style>
+    </footer>
+    <script>
+      // Fade-in animation on scroll
+      const fadeEls = document.querySelectorAll(".fade-in");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      fadeEls.forEach((el) => observer.observe(el));
+
+      // Back to top button
+      const backToTop = document.getElementById("backToTop");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 200) {
+          backToTop.style.display = "block";
+        } else {
+          backToTop.style.display = "none";
+        }
+      });
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>

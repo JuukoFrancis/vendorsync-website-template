@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vendorsync</title>
+    <meta
+      charset="utf-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      rel="stylesheet"
+    />
+    <link href="css/frame.css" rel="stylesheet" />
+    <link href="css/controls.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --vendorsync-blue: #4f8cff; /* lighter blue */
+        --vendorsync-maroon: #800000;
+        --vendorsync-light: #f5f5f5;
+        --vendorsync-btn-radius: 24px;
+      }
+      body {
+        background: var(--vendorsync-light);
+        font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--vendorsync-blue);
+        padding: 1rem 2rem;
+        color: #fff;
+      }
+      .navbar .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #fff;
+      }
+      .navbar nav a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 2rem;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .navbar nav a:hover {
+        color: var(--vendorsync-maroon);
+      }
+      .hero {
+        background: url("img/supermarket.jpg") no-repeat center center/cover;
+        min-height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        opacity: 1;
+        transition: opacity 1.2s cubic-bezier(0.4, 2, 0.6, 1),
+          background-size 0.5s;
+        background-size: 100%;
+        will-change: background-size, background-position;
+      }
+      .hero.bg-visible {
+        opacity: 1;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(26, 35, 126, 0.45);
+        z-index: 1;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .hero-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #fff;
+        text-shadow: 2px 2px 8px #00000055;
+      }
+      .hero-desc {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: #fff;
+        text-shadow: 1px 1px 6px #00000033;
+      }
+      .search-bar {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+      .search-bar input {
+        padding: 0.8rem 1rem;
+        border: none;
+        border-radius: var(--vendorsync-btn-radius) 0 0
+          var(--vendorsync-btn-radius);
+        width: 60%;
+        max-width: 350px;
+        font-size: 1rem;
+        outline: none;
+      }
+      .search-bar button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        background: var(--vendorsync-maroon);
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 0 var(--vendorsync-btn-radius)
+          var(--vendorsync-btn-radius) 0;
+        cursor: pointer;
+        font-weight: 700;
+        transition: background 0.2s;
+      }
+      .search-bar button:hover {
+        background: #a83232;
+      }
+      .categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin: 2rem 0 1.5rem 0;
+      }
+      .category-btn {
+        background: linear-gradient(
+          90deg,
+          var(--vendorsync-maroon) 0%,
+          var(--vendorsync-blue) 100%
+        );
+        color: #fff;
+        border: none;
+        border-radius: var(--vendorsync-btn-radius);
+        padding: 1.1rem 2.2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.25s, filter 0.2s, box-shadow 0.25s,
+          transform 0.25s;
+        box-shadow: 0 2px 8px #0001;
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
+        outline: none;
+        position: relative;
+        z-index: 1;
+      }
+      .category-btn:hover,
+      .category-btn:focus {
+        background: linear-gradient(90deg, #a83232 60%, #4f8cff 100%);
+        filter: brightness(1.08) saturate(1.1);
+        box-shadow: 0 8px 32px #80000044, 0 2px 16px #4f8cff22;
+        transform: scale(1.05);
+      }
+      .category-btn:active {
+        opacity: 0.85;
+        transform: scale(0.98);
+      }
+      .download-btn {
+        background: var(--vendorsync-maroon);
+        color: #fff;
+        border: none;
+        border-radius: var(--vendorsync-btn-radius);
+        padding: 0.5rem 1.2rem;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 1.5rem auto 0 auto;
+        display: inline-block;
+        width: auto;
+        min-width: 0;
+        max-width: 100%;
+        cursor: pointer;
+        box-shadow: 0 2px 8px #0002;
+        transition: background 0.2s;
+      }
+      .download-btn:hover {
+        background: #a83232;
+      }
+      .explore-btn {
+        background: linear-gradient(
+          90deg,
+          var(--vendorsync-maroon) 60%,
+          var(--vendorsync-blue) 100%
+        );
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        border: none;
+        border-radius: var(--vendorsync-btn-radius);
+        padding: 1rem 2.5rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        box-shadow: 0 4px 24px #80000033, 0 2px 8px #0002;
+        transition: background 0.25s, opacity 0.3s, transform 0.3s,
+          box-shadow 0.25s;
+        opacity: 0.97;
+        transform: scale(1);
+        letter-spacing: 1px;
+        outline: none;
+        position: relative;
+        z-index: 2;
+        text-shadow: 1px 1px 6px #0002;
+      }
+      .explore-btn:hover,
+      .explore-btn:focus {
+        background: linear-gradient(90deg, #a83232 60%, #4f8cff 100%);
+        opacity: 1;
+        transform: scale(1.05);
+        box-shadow: 0 8px 32px #80000044, 0 2px 16px #4f8cff22;
+        filter: brightness(1.08) saturate(1.1);
+      }
+      .explore-btn:active {
+        opacity: 0.85;
+        transform: scale(0.98);
+      }
+      @media (max-width: 700px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+        .navbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .navbar nav {
+          margin-top: 0.5rem;
+        }
+        .categories {
+          flex-direction: column;
+          gap: 0.7rem;
+        }
+        .search-bar input {
+          width: 100%;
+        }
+      }
+      .accent-blue {
+        color: var(--vendorsync-blue);
+        text-shadow: 2px 2px 8px #0002;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      class="navbar"
+      id="navbar"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 1.2rem">
+        <a
+          href="index.html"
+          class="logo"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+          "
+        >
+          <img
+            src="img/logo.jpeg"
+            alt="Vendorsync Logo"
+            style="
+              height: 40px;
+              width: 40px;
+              object-fit: contain;
+              border-radius: 8px;
+              background: #fff;
+            "
+          />
+          <span
+            style="
+              font-size: 2rem;
+              font-weight: bold;
+              letter-spacing: 2px;
+              color: #fff;
+            "
+            >Vendorsync</span
+          >
+        </a>
+        <button
+          id="menu-toggle"
+          aria-label="Open menu"
+          style="
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            align-items: center;
+            margin-left: 1.2rem;
+          "
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <nav id="nav-links" style="display: flex; align-items: center">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="appstructure.html">App Features</a>
+        <a href="architecture.html">Architecture</a>
+      </nav>
+    </div>
+    <style>
+      @media (max-width: 700px) {
+        .navbar nav {
+          display: none !important;
+        }
+        #menu-toggle {
+          display: block !important;
+        }
+      }
+      @media (min-width: 701px) {
+        #menu-toggle {
+          display: none !important;
+        }
+        .navbar nav {
+          display: flex !important;
+        }
+      }
+      /* Responsive footer */
+      @media (max-width: 700px) {
+        footer > div {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 0.5rem !important;
+        }
+        footer a {
+          margin: 0 0.5rem 0.5rem 0 !important;
+        }
+      }
+      /* Themed mobile drawer */
+      #mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 75vw;
+        max-width: 320px;
+        height: 100vh;
+        background: linear-gradient(
+          120deg,
+          var(--vendorsync-blue) 60%,
+          var(--vendorsync-maroon) 100%
+        );
+        box-shadow: -4px 0 24px #0003;
+        z-index: 2000;
+        flex-direction: column;
+        padding: 2.5rem 1.5rem 1.5rem 2rem;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        transition: transform 0.25s cubic-bezier(0.4, 2, 0.6, 1), opacity 0.2s;
+        font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+      }
+      #mobile-menu.open {
+        display: flex !important;
+      }
+      #mobile-menu button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #fff;
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      #mobile-menu button:hover {
+        color: #ffd6d6;
+      }
+      #mobile-menu a {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        text-decoration: none;
+        letter-spacing: 1px;
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        transition: background 0.18s, color 0.18s;
+        box-shadow: 0 1px 8px #0001;
+      }
+      #mobile-menu a:last-child {
+        margin-bottom: 0;
+      }
+      #mobile-menu a:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffe;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <div id="mobile-menu">
+      <button onclick="closeMobileMenu()">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="appstructure.html">App Features</a>
+      <a href="architecture.html">Architecture</a>
+    </div>
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+      const mobileMenu = document.getElementById("mobile-menu");
+      function openMobileMenu() {
+        mobileMenu.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      menuToggle && menuToggle.addEventListener("click", openMobileMenu);
+      // Close menu on link click (mobile)
+      Array.from(mobileMenu.querySelectorAll("a")).forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+    </script>
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-title">Welcome to Vendorsync</div>
+        <div class="hero-desc">
+          A modern Vendor-to-Supplier Management System for seamless, real-time
+          supply chain collaboration.
+        </div>
+        <button class="explore-btn" onclick="scrollToNextSection()">
+          Explore now
+        </button>
+      </div>
+    </div>
+    <div class="main-bg-section">
+      <div class="categories">
+        <button class="category-btn" onclick="scrollToFeature('inventory')">
+          Inventory Management
+        </button>
+        <button class="category-btn" onclick="scrollToFeature('scheduling')">
+          Supplier Scheduling
+        </button>
+        <button class="category-btn" onclick="scrollToFeature('order')">
+          Order Tracking
+        </button>
+        <button class="category-btn" onclick="scrollToFeature('analytics')">
+          Analytics & Reports
+        </button>
+        <button class="category-btn" onclick="openRegistration('vendor')">
+          Register as Vendor
+        </button>
+        <button class="category-btn" onclick="openRegistration('supplier')">
+          Register as Supplier
+        </button>
+      </div>
+      <div
+        id="features"
+        style="
+          max-width: 1000px;
+          margin: 3rem auto;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          justify-content: center;
+        "
+      >
+        <div
+          id="inventory"
+          class="feature-card fade-in"
+          style="
+            flex: 1 1 220px;
+            min-width: 220px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 2rem;
+            text-align: center;
+          "
+        >
+          <i
+            class="fas fa-boxes"
+            style="font-size: 2.5rem; color: var(--vendorsync-blue)"
+          ></i>
+          <h3>Inventory Management</h3>
+          <p>
+            Track, manage, and update your inventory in real time with ease.
+          </p>
+        </div>
+        <div
+          id="scheduling"
+          class="feature-card fade-in"
+          style="
+            flex: 1 1 220px;
+            min-width: 220px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 2rem;
+            text-align: center;
+          "
+        >
+          <i
+            class="fas fa-calendar-alt"
+            style="font-size: 2.5rem; color: var(--vendorsync-blue)"
+          ></i>
+          <h3>Supplier Scheduling</h3>
+          <p>Automate and manage supplier schedules and delivery times.</p>
+        </div>
+        <div
+          id="threshold"
+          class="feature-card fade-in"
+          style="
+            flex: 1 1 220px;
+            min-width: 220px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 2rem;
+            text-align: center;
+          "
+        >
+          <i
+            class="fas fa-sliders-h"
+            style="font-size: 2.5rem; color: var(--vendorsync-blue)"
+          ></i>
+          <h3>Threshold Management</h3>
+
+          <p>
+            Set custom stock level thresholds to get alerts or reorders which
+            must be confirmed by the vendor when inventory runs low.
+          </p>
+        </div>
+
+        <div
+          id="analytics"
+          class="feature-card fade-in"
+          style="
+            flex: 1 1 220px;
+            min-width: 220px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 2rem;
+            text-align: center;
+          "
+        >
+          <i
+            class="fas fa-chart-line"
+            style="font-size: 2.5rem; color: var(--vendorsync-blue)"
+          ></i>
+          <h3>Analytics & Reports</h3>
+          <p>Gain insights with powerful analytics and downloadable reports.</p>
+        </div>
+      </div>
+      <div style="text-align: center">
+        <a href="#" class="download-btn" onclick="openDownloadModal()"
+          >Download the App</a
+        >
+      </div>
+      <div
+        class="why-vendorsync-card fade-in"
+        style="
+          max-width: 900px;
+          margin: 3rem auto;
+          padding: 2rem;
+          background: #fff;
+          border-radius: 18px;
+          box-shadow: 0 2px 16px #0001;
+        "
+      >
+        <h2 style="color: var(--vendorsync-blue)">Why Vendorsync?</h2>
+        <ul class="why-list">
+          <li>
+            <i class="fas fa-database"></i> Centralized stock data management
+            with real-time Firestore syncing.
+          </li>
+          <li>
+            <i class="fas fa-layer-group"></i> Automatic stock initialization
+            from delivered orders.
+          </li>
+          <li>
+            <i class="fas fa-edit"></i> Manual and bulk stock updates via
+            intuitive forms or CSV uploads.
+          </li>
+          <li>
+            <i class="fas fa-bell"></i> Smart threshold monitoring and low-stock
+            alerts.
+          </li>
+          <li>
+            <i class="fas fa-lightbulb"></i> Predictive analytics for suggested
+            orders and demand forecasting.
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i> Vendor review and confirmation
+            before automated order placement.
+          </li>
+          <li>
+            <i class="fas fa-chart-line"></i> Visual reports for stock status,
+            delivery history, and sales insights.
+          </li>
+          <li>
+            <i class="fas fa-chart-pie"></i> Sales prediction engine to help
+            optimize inventory planning.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      id="download-modal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          border-radius: 18px;
+          max-width: 350px;
+          width: 90vw;
+          padding: 2rem;
+          box-shadow: 0 2px 16px #0002;
+          position: relative;
+          text-align: center;
+        "
+      >
+        <button
+          onclick="closeDownloadModal()"
+          style="
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--vendorsync-maroon);
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+        <h2 style="color: var(--vendorsync-blue); margin-bottom: 1.5rem">
+          Get the Vendorsync App
+        </h2>
+        <a href="#" style="display: block; margin-bottom: 1rem"
+          ><img
+            src="img/google-play-badge.png"
+            alt="Google Play"
+            style="width: 180px"
+        /></a>
+        <a href="#" style="display: block"
+          ><img
+            src="img/app-store-badge.png"
+            alt="App Store"
+            style="width: 180px"
+        /></a>
+      </div>
+    </div>
+    <script>
+      function scrollToFeature(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+      function openRegistration(role) {
+        document.getElementById("registration-modal").style.display = "flex";
+        document.getElementById("reg-role").value = role;
+        document.getElementById("reg-title").innerText =
+          "Register as " + (role.charAt(0).toUpperCase() + role.slice(1));
+      }
+      function closeRegistration() {
+        document.getElementById("registration-modal").style.display = "none";
+      }
+      function openDownloadModal() {
+        document.getElementById("download-modal").style.display = "flex";
+      }
+      function closeDownloadModal() {
+        document.getElementById("download-modal").style.display = "none";
+      }
+      function scrollToNextSection() {
+        const nextSection = document.querySelector(
+          ".main-bg-section, .categories"
+        );
+        if (nextSection) nextSection.scrollIntoView({ behavior: "smooth" });
+      }
+      // Fade-in animation on scroll
+      const faders = document.querySelectorAll(".fade-in");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      faders.forEach((fader) => observer.observe(fader));
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelector(".hero").classList.add("bg-visible");
+      });
+      // Parallax and zoom-in effect for hero
+      window.addEventListener("scroll", () => {
+        const hero = document.querySelector(".hero");
+        if (!hero) return;
+        const scrollY = window.scrollY;
+        // Parallax: move background position Y
+        const parallax = Math.min(scrollY * 0.3, 120);
+        // Zoom: increase background size slightly as you scroll
+        const zoom = 100 + Math.min(scrollY * 0.06, 8); // max 108%
+        hero.style.backgroundPosition = `center ${parallax}px`;
+        hero.style.backgroundSize = `${zoom}%`;
+      });
+    </script>
+    <div
+      id="registration-modal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          border-radius: 18px;
+          max-width: 400px;
+          width: 90vw;
+          padding: 2rem;
+          box-shadow: 0 2px 16px #0002;
+          position: relative;
+        "
+      >
+        <button
+          onclick="closeRegistration()"
+          style="
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--vendorsync-maroon);
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+        <h2 id="reg-title">Register</h2>
+        <form>
+          <input type="hidden" id="reg-role" name="role" value="" />
+          <div style="margin-bottom: 1rem">
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              required
+              style="
+                width: 100%;
+                padding: 0.7rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              style="
+                width: 100%;
+                padding: 0.7rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="text"
+              name="company"
+              placeholder="Company/Shop Name"
+              required
+              style="
+                width: 100%;
+                padding: 0.7rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              style="
+                width: 100%;
+                padding: 0.7rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+          <button
+            type="submit"
+            style="
+              width: 100%;
+              background: var(--vendorsync-blue);
+              color: #fff;
+              padding: 0.8rem;
+              border: none;
+              border-radius: 8px;
+              font-size: 1.1rem;
+              font-weight: 700;
+              cursor: pointer;
+            "
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+    <button
+      id="backToTop"
+      title="Back to top"
+      style="
+        display: none;
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        background: var(--vendorsync-blue);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 8px #0002;
+        cursor: pointer;
+        z-index: 100;
+        transition: background 0.2s;
+      "
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <style>
+      #backToTop:hover {
+        background: var(--vendorsync-maroon);
+      }
+      @media (max-width: 600px) {
+        #backToTop {
+          right: 1rem;
+          bottom: 1rem;
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+    <script>
+      // Back to top button
+      const backToTop = document.getElementById("backToTop");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 200) {
+          backToTop.style.display = "block";
+        } else {
+          backToTop.style.display = "none";
+        }
+      });
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
+  <footer class="vs-footer">
+    <div class="footer-main">
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="appstructure.html">App Features</a>
+        <a href="architecture.html">Architecture</a>
+
+        <a
+          href="https://github.com/CharmiPanchal17/VendorSync/"
+          target="_blank"
+          rel="noopener"
+          ><i class="fab fa-github"></i> GitHub</a
+        >
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>123 Main St, Kampala, Uganda</p>
+        <p>
+          Email:
+          <a href="mailto:vendorsyncug@gmail.com">vendorsyncug@gmail.com</a>
+        </p>
+        <p>Phone: +256 123 456 789</p>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+      <div class="footer-section">
+        <h4>Get the App</h4>
+        <div class="footer-app-badges">
+          <a href="#"
+            ><img
+              src="img/google-play-badge.png"
+              alt="Google Play"
+              class="footer-badge"
+          /></a>
+          <a href="#"
+            ><img
+              src="img/app-store-badge.png"
+              alt="App Store"
+              class="footer-badge"
+          /></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Vendorsync. All rights reserved.</span>
+    </div>
+    <style>
+      .vs-footer {
+        background: linear-gradient(90deg, #800000 60%, #4f8cff 100%);
+        color: #fff;
+        padding: 1.1rem 0 0 0;
+        margin-top: 2rem;
+        font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+        font-size: 0.97rem;
+      }
+      .footer-main {
+        max-width: 1100px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1.2rem;
+        padding: 0 1rem;
+      }
+      .footer-section {
+        flex: 1 1 140px;
+        min-width: 120px;
+        margin-bottom: 0.7rem;
+      }
+      .footer-section h4 {
+        margin-bottom: 0.4rem;
+        font-size: 1rem;
+        color: #ffe;
+        letter-spacing: 1px;
+      }
+      .footer-section a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        margin-bottom: 0.25rem;
+        font-size: 0.97rem;
+        transition: color 0.18s;
+      }
+      .footer-section a:hover {
+        color: #ffd6d6;
+      }
+      .footer-section p {
+        margin: 0 0 0.25rem 0;
+        font-size: 0.97rem;
+      }
+      .footer-social a {
+        display: inline-block;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        color: #fff;
+        transition: color 0.18s;
+      }
+      .footer-social a:last-child {
+        margin-right: 0;
+      }
+      .footer-social a:hover {
+        color: #ffd6d6;
+      }
+      .footer-app-badges {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .footer-badge {
+        width: 90px;
+        height: auto;
+        margin: 0;
+        display: inline-block;
+      }
+      .footer-bottom {
+        text-align: center;
+        padding: 0.7rem 0 0.3rem 0;
+        font-size: 0.95rem;
+        color: #ffe;
+        border-top: 1px solid #ffffff33;
+        margin-top: 0.5rem;
+      }
+      @media (max-width: 900px) {
+        .footer-main {
+          flex-wrap: wrap;
+          gap: 0.7rem;
+        }
+        .footer-section {
+          min-width: 100px;
+        }
+      }
+      @media (max-width: 700px) {
+        .footer-main {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0 0.5rem;
+        }
+        .footer-section {
+          width: 100%;
+          min-width: 0;
+          margin-bottom: 0.7rem;
+        }
+        .footer-social a {
+          margin-right: 0.7rem;
+        }
+        .footer-app-badges {
+          gap: 0.4rem;
+        }
+        .footer-badge {
+          width: 90px;
+        }
+        .footer-bottom {
+          font-size: 0.92rem;
+        }
+      }
+    </style>
+  </footer>
+  <style>
+    .main-bg-section {
+      background: linear-gradient(135deg, #fbeaea 40%, #80000022 100%);
+      width: 100%;
+      min-height: 100px;
+      padding-bottom: 2rem;
+    }
+    .feature-card {
+      border: 2px solid var(--vendorsync-blue);
+      padding: 2.5rem !important;
+      margin-left: 1.2rem;
+      margin-right: 1.2rem;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .feature-card:hover,
+    .feature-card:focus {
+      box-shadow: 0 12px 32px #4f8cff33, 0 4px 24px #0002;
+      transform: translateY(-10px) scale(1.03);
+      z-index: 2;
+    }
+    .why-vendorsync-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #0001;
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .why-list {
+      list-style: none;
+      padding: 0 0 0 2.5rem;
+      margin: 2rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: flex-start;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .why-list li {
+      font-size: 1.15rem;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+    .why-list i {
+      color: var(--vendorsync-blue);
+      font-size: 1.5rem;
+      min-width: 2em;
+      text-align: center;
+    }
+    .why-vendorsync-card {
+      border: 2px solid var(--vendorsync-maroon);
+      padding: 2.5rem !important;
+      margin-left: 1.2rem;
+      margin-right: 1.2rem;
+    }
+    .category-btn {
+      padding: 1.1rem 2.2rem;
+      margin-left: 0.7rem;
+      margin-right: 0.7rem;
+    }
+    @media (max-width: 900px) {
+      .feature-card,
+      .why-vendorsync-card {
+        padding: 2rem !important;
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
+      }
+      .category-btn {
+        padding: 0.9rem 1.5rem;
+        margin-left: 0.4rem;
+        margin-right: 0.4rem;
+      }
+    }
+    @media (max-width: 700px) {
+      .main-bg-section {
+        padding-bottom: 1rem;
+      }
+      .feature-card,
+      .why-vendorsync-card {
+        padding: 1.2rem 0.7rem 1rem 0.7rem !important;
+        margin-left: 0.2rem;
+        margin-right: 0.2rem;
+      }
+      .category-btn {
+        padding: 0.7rem 1.1rem;
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
+      }
+      .why-list {
+        padding-left: 0.5rem;
+        gap: 1rem;
+      }
+      .why-list li {
+        font-size: 1rem;
+      }
+      .why-list i {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</html>

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App Structure - Vendorsync</title>
+    <meta
+      charset="utf-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      rel="stylesheet"
+    />
+    <link href="css/frame.css" rel="stylesheet" />
+    <link href="css/controls.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --vendorsync-blue: #4f8cff;
+        --vendorsync-maroon: #800000;
+        --vendorsync-light: #f5f5f5;
+        --vendorsync-btn-radius: 24px;
+      }
+      body {
+        background: linear-gradient(135deg, #fbeaea 40%, #80000022 100%);
+        font-family: "Open Sans", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        min-height: 100vh;
+      }
+      .watermark {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .watermark i {
+        font-size: 32vw;
+        background: linear-gradient(
+          135deg,
+          var(--vendorsync-maroon) 0%,
+          var(--vendorsync-blue) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        /* text-fill-color: transparent; */
+        display: inline-block;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--vendorsync-blue);
+        padding: 1rem 2rem;
+        color: #fff;
+        position: relative;
+        z-index: 2;
+      }
+      .navbar .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #fff;
+      }
+      .navbar nav a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 2rem;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .navbar nav a:hover {
+        color: var(--vendorsync-maroon);
+      }
+      .container {
+        max-width: 900px;
+        margin: 2.5rem auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 48px #80000044, 0 2px 16px #80000022;
+        padding: 2.5rem 2rem;
+        position: relative;
+        z-index: 2;
+        border: 3px solid #800000;
+      }
+      h1,
+      h2,
+      h3 {
+        color: var(--vendorsync-blue);
+        margin-top: 0;
+      }
+      .section {
+        margin-bottom: 2.5rem;
+      }
+      .features-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+      }
+      .feature-card {
+        background: linear-gradient(135deg, #f7f9ff 60%, #e0e7ff 100%);
+        border: 1px solid #e0e7ff;
+        border-radius: 14px;
+        padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+        min-width: 220px;
+        max-width: 260px;
+        text-align: center;
+        box-shadow: 0 2px 8px #0001;
+        position: relative;
+      }
+      .feature-card i {
+        font-size: 2.2rem;
+        color: var(--vendorsync-maroon);
+        margin-bottom: 0.5rem;
+      }
+      .feature-card h3 {
+        color: var(--vendorsync-blue);
+        margin-bottom: 0.3rem;
+      }
+      .screenshots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+      .screenshot-placeholder {
+        width: 180px;
+        height: 350px;
+        background: linear-gradient(135deg, #e0e7ff 60%, #f7f9ff 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 8px #0001;
+        text-align: center;
+        position: relative;
+      }
+      .screenshot-placeholder i {
+        font-size: 2.5rem;
+        color: var(--vendorsync-blue);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      @media (max-width: 700px) {
+        .container {
+          padding: 1.2rem 0.5rem;
+        }
+        .features-list {
+          flex-direction: column;
+          align-items: center;
+        }
+        .screenshots {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .modal-fade-in {
+        animation: modalFadeIn 0.5s cubic-bezier(0.4, 2, 0.6, 1);
+      }
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Watermark background SVG for Vendorsync branding -->
+    <div
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      "
+    >
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 800 600"
+        style="opacity: 0.18; position: absolute; top: 0; left: 0"
+      >
+        <defs>
+          <linearGradient id="vendorsync-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#800000" />
+            <stop offset="100%" stop-color="#4f8cff" />
+          </linearGradient>
+        </defs>
+        <g>
+          <!-- Sync/Link Icon (stylized) -->
+          <circle cx="400" cy="300" r="180" fill="url(#vendorsync-gradient)" />
+          <path
+            d="M 400 140 A 160 160 0 1 1 399.9 140"
+            fill="none"
+            stroke="#fff"
+            stroke-width="32"
+            stroke-dasharray="80 40"
+          />
+          <path
+            d="M 400 460 A 160 160 0 1 0 400.1 460"
+            fill="none"
+            stroke="#fff"
+            stroke-width="32"
+            stroke-dasharray="80 40"
+          />
+          <polyline
+            points="400,140 400,60 440,100"
+            fill="none"
+            stroke="#fff"
+            stroke-width="24"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <polyline
+            points="400,460 400,540 360,500"
+            fill="none"
+            stroke="#fff"
+            stroke-width="24"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      </svg>
+    </div>
+    <div
+      class="navbar"
+      id="navbar"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; align-items: center; gap: 1.2rem">
+        <a
+          href="index.html"
+          class="logo"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+          "
+        >
+          <img
+            src="img/logo.jpeg"
+            alt="Vendorsync Logo"
+            style="
+              height: 40px;
+              width: 40px;
+              object-fit: contain;
+              border-radius: 8px;
+              background: #fff;
+            "
+          />
+          <span
+            style="
+              font-size: 2rem;
+              font-weight: bold;
+              letter-spacing: 2px;
+              color: #fff;
+            "
+            >Vendorsync</span
+          >
+        </a>
+        <button
+          id="menu-toggle"
+          aria-label="Open menu"
+          style="
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            align-items: center;
+            margin-left: 1.2rem;
+          "
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <nav id="nav-links" style="display: flex; align-items: center">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="appstructure.html">App Structure</a>
+        <a href="architecture.html">Architecture</a>
+      </nav>
+    </div>
+    <style>
+      @media (max-width: 700px) {
+        .navbar nav {
+          display: none !important;
+        }
+        #menu-toggle {
+          display: block !important;
+        }
+      }
+      @media (min-width: 701px) {
+        #menu-toggle {
+          display: none !important;
+        }
+        .navbar nav {
+          display: flex !important;
+        }
+      }
+      /* Responsive footer */
+      @media (max-width: 700px) {
+        footer > div {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 0.5rem !important;
+        }
+        footer a {
+          margin: 0 0.5rem 0.5rem 0 !important;
+        }
+      }
+      /* Themed mobile drawer */
+      #mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 75vw;
+        max-width: 320px;
+        height: 100vh;
+        background: linear-gradient(
+          120deg,
+          var(--vendorsync-blue) 60%,
+          var(--vendorsync-maroon) 100%
+        );
+        box-shadow: -4px 0 24px #0003;
+        z-index: 2000;
+        flex-direction: column;
+        padding: 2.5rem 1.5rem 1.5rem 2rem;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        transition: transform 0.25s cubic-bezier(0.4, 2, 0.6, 1), opacity 0.2s;
+        font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+      }
+      #mobile-menu.open {
+        display: flex !important;
+      }
+      #mobile-menu button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #fff;
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      #mobile-menu button:hover {
+        color: #ffd6d6;
+      }
+      #mobile-menu a {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        text-decoration: none;
+        letter-spacing: 1px;
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        transition: background 0.18s, color 0.18s;
+        box-shadow: 0 1px 8px #0001;
+      }
+      #mobile-menu a:last-child {
+        margin-bottom: 0;
+      }
+      #mobile-menu a:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffe;
+      }
+    </style>
+    <div id="mobile-menu">
+      <button onclick="closeMobileMenu()">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="appstructure.html">App Structure</a>
+      <a href="architecture.html">Architecture</a>
+    </div>
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+      const mobileMenu = document.getElementById("mobile-menu");
+      function openMobileMenu() {
+        mobileMenu.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      menuToggle && menuToggle.addEventListener("click", openMobileMenu);
+      // Close menu on link click (mobile)
+      Array.from(mobileMenu.querySelectorAll("a")).forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+    </script>
+    <div class="container">
+      <div class="section fade-in">
+        <h1>App Features</h1>
+        <p>
+          Vendorsync is built to streamline the vendor-to-supplier relationship
+          with a modern, intuitive interface and robust backend. The app enables
+          real-time order management, delivery tracking, and seamless
+          communication between vendors and suppliers.
+        </p>
+      </div>
+      <div class="section fade-in">
+        <h2 style="margin-bottom: 20px">Key Features & Workflow</h2>
+        <div class="features-list">
+          <div class="feature-card fade-in">
+            <i class="fas fa-boxes"></i>
+            <h3>Order Management</h3>
+            <p>
+              Vendors can place, track, and manage supply orders in real time
+              through a centralized dashboard.
+            </p>
+          </div>
+          <div class="feature-card fade-in">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Supplier Scheduling</h3>
+            <p>
+              Suppliers respond to requests, confirm delivery schedules, and
+              update vendors on order statuses.
+            </p>
+          </div>
+          <div class="feature-card fade-in">
+            <i class="fas fa-truck"></i>
+            <h3>Delivery Tracking</h3>
+            <p>
+              Automatic tracking of delivery times, fulfillment accuracy, and
+              order history for proper analysis.
+            </p>
+          </div>
+          <div class="feature-card fade-in">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <h3>Accounting Integration</h3>
+            <p>
+              Integrates with accounting systems for seamless invoicing and
+              payments.
+            </p>
+          </div>
+          <div class="feature-card fade-in">
+            <i class="fas fa-chart-line"></i>
+            <h3>Analytics & Reports</h3>
+            <p>
+              Gain insights with powerful analytics and downloadable reports.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="section fade-in">
+        <h2>App Screenshots</h2>
+        <p style="color: #333">
+          Below are real screenshots from the Vendorsync app, showcasing key
+          screens and workflows.
+        </p>
+        <div class="screenshots">
+          <img
+            src="img/screens/splash_screen.png"
+            alt="Splash Screen"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/welcome_screen.png"
+            alt="Welcome Screen"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_login_screen.png"
+            alt="Vendor Login"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_register_screen.png"
+            alt="Vendor Register"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_login_screen.png"
+            alt="Supplier Login"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_register_screen.png"
+            alt="Supplier Register"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_dashboard_screen.png"
+            alt="Vendor Dashboard"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+
+          <img
+            src="img/screens/vendor_drawer_screen.png"
+            alt="Vendor Login"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vender_order_screen.png"
+            alt="Vendor Order"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+
+          <img
+            src="img/screens/vendor_order_details_screen_1.png"
+            alt="Vendor Order Details 1"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_order_details_screen_2.png"
+            alt="Vendor Order Details 2"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_revent_orders_screen.png"
+            alt="Vendor Recent Orders"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_suggested_order_detail_screen.png"
+            alt="Vendor Suggested Order Detail"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_suggested_order_detail_screen_1.png"
+            alt="Stock Management"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_analytics_screen.png"
+            alt="Vendor Analytics"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_available_suppliers_screen.png"
+            alt="Vendor Available Suppliers"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_sales_report_screen.png"
+            alt="Vendor Sales Report"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_stock_management_details_screen.png"
+            alt="Vendor Stock Management Details"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_csv_stock_screen.png"
+            alt="Vendor CSV Stock"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_calender_screen.png"
+            alt="Vendor Calendar"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_report_preview_screen.png"
+            alt="Vendor Report Preview"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/vendor_notification_screen.png"
+            alt="Vendor Notification"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_dashboard_screen.png"
+            alt="Supplier Dashboard"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_drawer_screen.png"
+            alt="Supplier Drawer"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_profile_screen.png"
+            alt="Supplier Profile"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/supplier_edit_profile_screen.png"
+            alt="Supplier Edit Profile"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/stock_management_screen.png"
+            alt="Stock Management"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+          <img
+            src="img/screens/light_dark_mode_screen.png"
+            alt="Light/Dark Mode"
+            class="fade-in"
+            style="
+              width: 180px;
+              height: auto;
+              max-width: 100%;
+              border-radius: 16px;
+              box-shadow: 0 2px 8px #0002;
+              object-fit: cover;
+            "
+          />
+        </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top: 2rem">
+      <div class="section">
+        <h2>Contact Us</h2>
+        <form
+          style="
+            max-width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+          "
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            style="
+              padding: 0.7rem;
+              border-radius: 8px;
+              border: 1.5px solid #800000;
+            "
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            style="
+              padding: 0.7rem;
+              border-radius: 8px;
+              border: 1.5px solid #800000;
+            "
+          />
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            required
+            style="
+              padding: 0.7rem;
+              border-radius: 8px;
+              border: 1.5px solid #800000;
+              min-height: 100px;
+            "
+          ></textarea>
+          <button
+            type="submit"
+            style="
+              background: linear-gradient(90deg, #800000, #4f8cff);
+              color: #fff;
+              font-weight: 700;
+              padding: 0.7rem;
+              border: none;
+              border-radius: 8px;
+              cursor: pointer;
+            "
+          >
+            Send Message
+          </button>
+        </form>
+        <div
+          style="
+            text-align: center;
+            margin-top: 1rem;
+            color: #800000;
+            font-weight: 600;
+          "
+        >
+          or email us at
+          <a href="mailto:vendorsyncug@gmail.com" style="color: #4f8cff"
+            >vendorsyncug@gmail.com</a
+          >
+        </div>
+      </div>
+    </div>
+    <footer class="vs-footer">
+      <div class="footer-main">
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="appstructure.html">App Features</a>
+          <a href="architecture.html">Architecture</a>
+
+          <a
+            href="https://github.com/your-github-link"
+            target="_blank"
+            rel="noopener"
+            ><i class="fab fa-github"></i> GitHub</a
+          >
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>123 Street, Kampala, Uganda</p>
+          <p>
+            Email:
+            <a href="mailto:vendorsyncug@gmail.com">vendorsyncug@gmail.com</a>
+          </p>
+          <p>Phone: +256 123 456 789</p>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+        <div class="footer-section">
+          <h4>Get the App</h4>
+          <div class="footer-app-badges">
+            <a href="#"
+              ><img
+                src="img/google-play-badge.png"
+                alt="Google Play"
+                class="footer-badge"
+            /></a>
+            <a href="#"
+              ><img
+                src="img/app-store-badge.png"
+                alt="App Store"
+                class="footer-badge"
+            /></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Vendorsync. All rights reserved.</span>
+      </div>
+      <style>
+        .vs-footer {
+          background: linear-gradient(90deg, #800000 60%, #4f8cff 100%);
+          color: #fff;
+          padding: 1.1rem 0 0 0;
+          margin-top: 2rem;
+          font-family: "Open Sans", "Source Sans Pro", Arial, sans-serif;
+          font-size: 0.97rem;
+        }
+        .footer-main {
+          max-width: 1100px;
+          margin: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 1.2rem;
+          padding: 0 1rem;
+        }
+        .footer-section {
+          flex: 1 1 140px;
+          min-width: 120px;
+          margin-bottom: 0.7rem;
+        }
+        .footer-section h4 {
+          margin-bottom: 0.4rem;
+          font-size: 1rem;
+          color: #ffe;
+          letter-spacing: 1px;
+        }
+        .footer-section a {
+          display: block;
+          color: #fff;
+          text-decoration: none;
+          margin-bottom: 0.25rem;
+          font-size: 0.97rem;
+          transition: color 0.18s;
+        }
+        .footer-section a:hover {
+          color: #ffd6d6;
+        }
+        .footer-section p {
+          margin: 0 0 0.25rem 0;
+          font-size: 0.97rem;
+        }
+        .footer-social a {
+          display: inline-block;
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+          color: #fff;
+          transition: color 0.18s;
+        }
+        .footer-social a:last-child {
+          margin-right: 0;
+        }
+        .footer-social a:hover {
+          color: #ffd6d6;
+        }
+        .footer-app-badges {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+        }
+        .footer-badge {
+          width: 90px;
+          height: auto;
+          margin: 0;
+          display: inline-block;
+        }
+        .footer-bottom {
+          text-align: center;
+          padding: 0.7rem 0 0.3rem 0;
+          font-size: 0.95rem;
+          color: #ffe;
+          border-top: 1px solid #ffffff33;
+          margin-top: 0.5rem;
+        }
+        @media (max-width: 900px) {
+          .footer-main {
+            flex-wrap: wrap;
+            gap: 0.7rem;
+          }
+          .footer-section {
+            min-width: 100px;
+          }
+        }
+        @media (max-width: 700px) {
+          .footer-main {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0 0.5rem;
+          }
+          .footer-section {
+            width: 100%;
+            min-width: 0;
+            margin-bottom: 0.7rem;
+          }
+          .footer-social a {
+            margin-right: 0.7rem;
+          }
+          .footer-app-badges {
+            gap: 0.4rem;
+          }
+          .footer-badge {
+            width: 90px;
+          }
+          .footer-bottom {
+            font-size: 0.92rem;
+          }
+        }
+      </style>
+    </footer>
+    <button
+      id="backToTop"
+      title="Back to top"
+      style="
+        display: none;
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        background: var(--vendorsync-blue);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 8px #0002;
+        cursor: pointer;
+        z-index: 100;
+        transition: background 0.2s;
+      "
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <style>
+      #backToTop:hover {
+        background: var(--vendorsync-maroon);
+      }
+      @media (max-width: 600px) {
+        #backToTop {
+          right: 1rem;
+          bottom: 1rem;
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+    <script>
+      // Fade-in animation on scroll
+      const faders = document.querySelectorAll(".fade-in");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      faders.forEach((fader) => observer.observe(fader));
+      // Back to top button
+      const backToTop = document.getElementById("backToTop");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 200) {
+          backToTop.style.display = "block";
+        } else {
+          backToTop.style.display = "none";
+        }
+      });
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>
