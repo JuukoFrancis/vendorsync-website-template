@@ -138,6 +138,16 @@
         justify-content: center;
         margin-top: 1.5rem;
       }
+      .screenshots img {
+        width: 180px;
+        height: auto;
+        max-width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px #0002;
+        object-fit: cover;
+        background: #fff;
+        display: block;
+      }
       .screenshot-placeholder {
         width: 180px;
         height: 350px;
@@ -169,6 +179,17 @@
         .screenshots {
           flex-direction: column;
           align-items: center;
+        }
+        .screenshots img {
+          width: 98vw;
+          max-width: 340px;
+          min-width: 0;
+          height: auto;
+          background: #fff;
+          border-radius: 14px;
+          box-shadow: 0 2px 8px #0002;
+          margin: 0 auto;
+          display: block;
         }
       }
       .fade-in {
@@ -489,6 +510,7 @@
             src="img/screens/splash_screen.png"
             alt="Splash Screen"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -502,6 +524,7 @@
             src="img/screens/welcome_screen.png"
             alt="Welcome Screen"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -515,6 +538,7 @@
             src="img/screens/vendor_login_screen.png"
             alt="Vendor Login"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -528,6 +552,7 @@
             src="img/screens/vendor_register_screen.png"
             alt="Vendor Register"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -541,6 +566,7 @@
             src="img/screens/supplier_login_screen.png"
             alt="Supplier Login"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -554,6 +580,7 @@
             src="img/screens/supplier_register_screen.png"
             alt="Supplier Register"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -567,6 +594,7 @@
             src="img/screens/vendor_dashboard_screen.png"
             alt="Vendor Dashboard"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -581,6 +609,7 @@
             src="img/screens/vendor_drawer_screen.png"
             alt="Vendor Login"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;
@@ -594,6 +623,7 @@
             src="img/screens/vender_order_screen.png"
             alt="Vendor Order"
             class="fade-in"
+            onerror="this.style.display='none'"
             style="
               width: 180px;
               height: auto;

@@ -101,6 +101,26 @@
       h3 {
         color: var(--vendorsync-blue);
         margin-top: 0;
+        font-family: "Open Sans", Arial, sans-serif;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      h3 {
+        font-size: 1.15rem;
+      }
+      p,
+      ul,
+      li {
+        font-size: 1.08rem;
+        font-family: "Open Sans", Arial, sans-serif;
+      }
+      ul.fade-in {
+        margin-bottom: 1.5em;
       }
       .section {
         margin-bottom: 2.5rem;
@@ -447,8 +467,8 @@
     </script>
     <div class="container">
       <div class="section fade-in">
-        <h1>About Vendorsync</h1>
-        <p>
+        <h1 class="fade-in">About Vendorsync</h1>
+        <p class="fade-in">
           Vendorsync is a Vendor-to-Supplier Management System designed to
           bridge the communication gap between vendors and suppliers, especially
           in industries supermarkets. Built with a modern technology stack,
@@ -457,24 +477,27 @@
         </p>
       </div>
       <!-- Our Mission -->
-      <h2 class="fade-in">
-        <i class="fas fa-bullseye fade-in"></i> Our Mission
-      </h2>
-      <p class="fade-in">
-        Our mission is to simplify supply chain communication by providing
-        smart, automated tools that reduce shortages, improve delivery accuracy,
-        and build stronger vendor-supplier relationships.
-      </p>
-
+      <div class="section fade-in">
+        <h2 class="fade-in">
+          <i class="fas fa-bullseye fade-in"></i> Our Mission
+        </h2>
+        <p class="fade-in">
+          Our mission is to simplify supply chain communication by providing
+          smart, automated tools that reduce shortages, improve delivery accuracy,
+          and build stronger vendor-supplier relationships.
+        </p>
+      </div>
       <!-- Who is it for? -->
-      <h2><i class="fas fa-users fade-in"></i> Who is it for?</h2>
-      <p class="fade-in">VendorSync is designed for:</p>
-      <ul class="fade-in">
-        <li class="fade-in">Retail store managers and supermarket operators</li>
-        <li>Vendors managing multiple product lines</li>
-        <li>Suppliers handling recurring deliveries</li>
-        <li>Businesses looking to automate stock and order systems</li>
-      </ul>
+      <div class="section fade-in">
+        <h2 class="fade-in"><i class="fas fa-users fade-in"></i> Who is it for?</h2>
+        <p class="fade-in">VendorSync is designed for:</p>
+        <ul class="fade-in">
+          <li class="fade-in">Retail store managers and supermarket operators</li>
+          <li class="fade-in">Vendors managing multiple product lines</li>
+          <li class="fade-in">Suppliers handling recurring deliveries</li>
+          <li class="fade-in">Businesses looking to automate stock and order systems</li>
+        </ul>
+      </div>
       <div class="section why-vendorsync fade-in">
         <i
           class="fas fa-thumbs-up"
@@ -485,45 +508,38 @@
             Why Choose Vendorsync?
           </h2>
 
-          <ul style="list-style: none">
-            <li>
+          <ul style="list-style: none" class="fade-in">
+            <li class="fade-in">
               <i
                 class="fas fa-boxes fade-in"
                 style="font-size: 1.2rem; color: #46c7f2"
               ></i>
               Smart stock threshold alerts to avoid shortages
             </li>
-            <li>
+            <li class="fade-in">
               <i
-                class="fas fa-sync-alt"
+                class="fas fa-sync-alt fade-in"
                 style="font-size: 1.2rem; color: #46c7f2"
               ></i>
               Real-time inventory sync between vendors and suppliers
             </li>
-            <!-- <li>
+            <li class="fade-in">
               <i
-                class="fas fa-calendar-alt"
-                style="font-size: 1.2rem; color: #46c7f2"
-              ></i>
-              Automated delivery scheduling and reminders
-            </li> -->
-            <li>
-              <i
-                class="fas fa-chart-line"
+                class="fas fa-chart-line fade-in"
                 style="font-size: 1.2rem; color: #46c7f2"
               ></i>
               Insightful analytics to track trends and cut costs
             </li>
-            <li>
+            <li class="fade-in">
               <i
-                class="fas fa-users-cog"
+                class="fas fa-users-cog fade-in"
                 style="font-size: 1.2rem; color: #46c7f2"
               ></i>
               Easy onboarding and management of supplier accounts
             </li>
-            <li>
+            <li class="fade-in">
               <i
-                class="fas fa-file-alt"
+                class="fas fa-file-alt fade-in"
                 style="font-size: 1.2rem; color: #46c7f2"
               ></i>
               Paperless workflows for order approvals and communication
@@ -531,9 +547,8 @@
           </ul>
         </div>
       </div>
-
       <div class="section fade-in">
-        <h2 style="margin-bottom: 20px">Meet the Team</h2>
+        <h2 class="fade-in" style="margin-bottom: 20px">Meet the Team</h2>
         <div class="team">
           <div class="team-card fade-in">
             <img
@@ -548,8 +563,8 @@
                 box-shadow: 0 2px 8px #0002;
               "
             />
-            <h3>BYAMUGISHA ANTHONY</h3>
-            <div class="id">24/U/0360 2400700360</div>
+            <h3 class="fade-in">BYAMUGISHA ANTHONY</h3>
+            <div class="id fade-in">24/U/0360 2400700360</div>
           </div>
           <div class="team-card fade-in">
             <img
@@ -564,8 +579,8 @@
                 box-shadow: 0 2px 8px #0002;
               "
             />
-            <h3>KICONCO JULIA</h3>
-            <div class="id">24/U/05775/PS 2400705775</div>
+            <h3 class="fade-in">KICONCO JULIA</h3>
+            <div class="id fade-in">24/U/05775/PS 2400705775</div>
           </div>
           <div class="team-card fade-in">
             <img
@@ -580,19 +595,18 @@
                 box-shadow: 0 2px 8px #0002;
               "
             />
-            <h3>JUUKO FRANCIS</h3>
-            <div class="id">24/U/23962/PS 2400723962</div>
-          </div>
-          <!-- Keep other team members as icon cards if needed -->
-          <div class="team-card fade-in">
-            <i class="fas fa-user-tie"></i>
-            <h3>KOBUMANZI PRISCILLA LINAH</h3>
-            <div class="id">2400706103 24/U/06103/PS</div>
+            <h3 class="fade-in">JUUKO FRANCIS</h3>
+            <div class="id fade-in">24/U/23962/PS 2400723962</div>
           </div>
           <div class="team-card fade-in">
-            <i class="fas fa-user-tie"></i>
-            <h3>PANCHAL CHARMI</h3>
-            <div class="id">24/X/21516/PS 2400721516</div>
+            <i class="fas fa-user-tie fade-in"></i>
+            <h3 class="fade-in">KOBUMANZI PRISCILLA LINAH</h3>
+            <div class="id fade-in">2400706103 24/U/06103/PS</div>
+          </div>
+          <div class="team-card fade-in">
+            <i class="fas fa-user-tie fade-in"></i>
+            <h3 class="fade-in">PANCHAL CHARMI</h3>
+            <div class="id fade-in">24/X/21516/PS 2400721516</div>
           </div>
         </div>
       </div>
@@ -682,7 +696,7 @@
           <a href="architecture.html">Architecture</a>
           <a href="#">Contact</a>
           <a
-            href="https://github.com/your-github-link"
+            href="https://github.com/CharmiPanchal17/VendorSync/"
             target="_blank"
             rel="noopener"
             ><i class="fab fa-github"></i> GitHub</a
